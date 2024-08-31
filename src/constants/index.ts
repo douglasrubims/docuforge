@@ -1,157 +1,144 @@
 export const IGNORE = [
-    // Diretórios de dependências e pacotes
-    "node_modules",
-    "bower_components",
-    "vendor",
+  "node_modules",
+  "bower_components",
+  "vendor",
 
-    // Diretórios e arquivos gerados por sistemas de controle de versão
-    ".git",
-    ".svn",
-    ".hg",
-    ".idea", // IntelliJ IDEA
-    ".vscode", // VS Code
+  ".git",
+  ".svn",
+  ".hg",
+  ".idea",
+  ".vscode",
 
-    // Diretórios e arquivos gerados por ferramentas de build e compilação
-    "dist",
-    "build",
-    "out",
-    "coverage",
-    ".next",
-    "public", // Next.js
-    "build",
-    ".cache",
-    ".next",
-    "tmp",
-    "logs",
+  "dist",
+  "build",
+  "out",
+  "coverage",
+  ".next",
+  "public",
+  "build",
+  ".cache",
+  ".next",
+  "tmp",
+  "logs",
 
-    // Diretórios e arquivos específicos de ambientes
-    ".env",
-    ".env.local",
-    ".env.development",
-    ".env.production",
-    ".env.test",
+  ".env",
+  ".env.local",
+  ".env.development",
+  ".env.production",
+  ".env.test",
 
-    // Diretórios e arquivos de testes
-    "test-results",
-    "cypress",
-    "e2e",
-    ".test",
-    "spec",
-    "tests",
+  "test-results",
+  "cypress",
+  "e2e",
+  ".test",
+  "spec",
+  "tests",
 
-    // Arquivos de configuração do sistema e IDE
-    "*.sublime-workspace",
-    "*.sublime-project",
-    "*.code-workspace",
-    "*.vscode",
-    "*.idea",
-    "*.iml",
-    "*.swp",
-    "*.swo",
-    "*.log",
-    "*.tmp",
-    "*.bak",
-    "*.orig",
-    "*.pid",
-    "*.seed",
+  "*.sublime-workspace",
+  "*.sublime-project",
+  "*.code-workspace",
+  "*.vscode",
+  "*.idea",
+  "*.iml",
+  "*.swp",
+  "*.swo",
+  "*.log",
+  "*.tmp",
+  "*.bak",
+  "*.orig",
+  "*.pid",
+  "*.seed",
 
-    // Arquivos de cache e log
-    ".npm",
-    ".yarn",
-    ".yarn-cache",
-    ".pnpm-store",
-    ".pnp",
-    ".pnp.js",
-    ".pnp.cjs",
-    "yarn-error.log",
-    "package-lock.json",
-    "yarn.lock",
+  ".npm",
+  ".yarn",
+  ".yarn-cache",
+  ".pnpm-store",
+  ".pnp",
+  ".pnp.js",
+  ".pnp.cjs",
+  "yarn-error.log",
+  "package-lock.json",
+  "yarn.lock",
 
-    // Diretórios e arquivos de deployment
-    ".vercel",
-    ".serverless",
-    ".netlify",
-    ".terraform",
-    "deploy",
-    "deployment",
+  ".vercel",
+  ".serverless",
+  ".netlify",
+  ".terraform",
+  "deploy",
+  "deployment",
 
-    // Diretórios e arquivos de documentação e geração de código
-    "docs",
-    "doc",
-    "generated",
-    "out-tsc",
-    "typings",
-    "tsconfig.tsbuildinfo",
+  "docs",
+  "doc",
+  "generated",
+  "out-tsc",
+  "typings",
+  "tsconfig.tsbuildinfo",
 
-    // Arquivos específicos para ignorar
-    ".DS_Store", // macOS
-    "Thumbs.db", // Windows
-    "ehthumbs.db", // Windows
-    "desktop.ini", // Windows
-    "npm-debug.log",
-    "yarn-debug.log",
-    "yarn-error.log",
-    "pnpm-debug.log",
-    "lerna-debug.log",
-    "tsconfig.json",
-    "jsconfig.json",
-    "package-lock.json",
-    "yarn.lock",
-    // "*.md",
-    // "*.mdx",
+  ".DS_Store",
+  "Thumbs.db",
+  "ehthumbs.db",
+  "desktop.ini",
+  "npm-debug.log",
+  "yarn-debug.log",
+  "yarn-error.log",
+  "pnpm-debug.log",
+  "lerna-debug.log",
+  "tsconfig.json",
+  "jsconfig.json",
+  "package-lock.json",
+  "yarn.lock",
 
-    // Video exclude
-    ".github",
-    ".gitignore",
-    ".editorconfig",
-    ".eslintignore",
-    ".eslintrc.json",
-    "LICENSE",
-    "prettier.config.js",
-    "tsup.config.ts",
+  ".github",
+  ".gitignore",
+  ".editorconfig",
+  ".eslintignore",
+  ".eslintrc.json",
+  "LICENSE",
+  "prettier.config.js",
+  "tsup.config.ts",
 
-    // Padrões de arquivos
-    "*.jpg",
-    "*.jpeg",
-    "*.png",
-    "*.gif",
-    "*.pdf",
-    "*.log",
-    "*.tmp",
-    "*.bak",
-    "*.swp",
-    "*.swo",
-    "*.zip",
-    "*.tar",
-    "*.gz",
-    "*.rar",
+  "*.jpg",
+  "*.jpeg",
+  "*.png",
+  "*.gif",
+  "*.pdf",
+  "*.log",
+  "*.tmp",
+  "*.bak",
+  "*.swp",
+  "*.swo",
+  "*.zip",
+  "*.tar",
+  "*.gz",
+  "*.rar"
 ];
 
-export const SYSTEM_PROMPT = `Você é um engenheiro de software senior com dezenas de anos de experiência profissional. Você escreve documentações sobre código e estruturas de forma simples, clara e concisa. Seu tom de escrita é técnico.`;
+export const SYSTEM_PROMPT =
+  "You are a senior software engineer with decades of professional experience. You write documentation about code and structures in a simple, clear, and concise manner. Your writing tone is technical.";
 
 export const ASK_FOR_METADATA_PROMPT = `
-Além do título e descrição dentro da doc, adicione no topo do arquivo (como um metadata) um 'title' e um 'description' (essa doc vai ser usada como página no mintlify). 
+In addition to the title and description within the doc, add a 'title' and a 'description' at the top of the file (as metadata) - this doc will be used as a page in mintlify.
 
-Exemplo abaixo: 
+Example below:
 \`\`\`
 ---
-title: Introdução
-description: 'Um guia passo a passo para começar a usar o serviço rapidamente'
+title: Introduction
+description: 'A step-by-step guide to quickly start using the service'
 ---
 \`\`\`
 
-Se o nome do arquivo não for genérico (index.ts, index.tsx, etc), você deve usar o nome do arquivo como título. Ex:
+If the file name is not generic (index.ts, index.tsx, etc), you should use the file name as the title. Ex:
 
 \`\`\`
 ---
 title: useForm
-description: '[DESCRIÇÃO...]'
+description: '[DESCRIPTION...]'
 ---
 \`\`\`
 `.trim();
 
 export const TREE_CONTEXT_PROMPT =
-    "A estrutura de pastas/arquivos é (Apenas para servir de contexto): ```{{JSON}}```";
+  "The folder/file structure is (Just for context): ```{{JSON}}```";
 
 export const TREE_ITEM_DETAILS_PROMPT =
-    "A estrutura do item que você deve gerar a doc é: ```{{JSON}}```";
+  "The structure of the item for which you should generate the doc is: ```{{JSON}}```";

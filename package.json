@@ -1,31 +1,33 @@
 {
-    "name": "codocx",
-    "version": "1.0.5",
-    "license": "MIT",
-    "type": "module",
-    "main": "./dist/index.js",
-    "bin": {
-        "codocx": "./dist/index.js"
-    },
-    "scripts": {
-        "start": "node --no-warnings=ExperimentalWarning --loader ts-node/esm src/index.ts",
-        "clean": "rimraf ./dist/ ./exec/",
-        "build": "npm run clean && tsup",
-        "pub": "npm run build && npm version patch && npm publish",
-        "refresh": "rm -rf ./node_modules ./package-lock.json && npm install"
-    },
-    "dependencies": {
-        "@ai-sdk/openai": "^0.0.45",
-        "@clack/prompts": "^0.7.0",
-        "ai": "^3.3.6",
-        "chalk": "^5.3.0",
-        "commander": "^12.1.0",
-        "dotenv": "^16.4.5"
-    },
-    "devDependencies": {
-        "@types/node": "^20.14.9",
-        "ts-node": "^10.9.2",
-        "tsup": "^8.1.0",
-        "typescript": "^5.5.3"
-    }
+  "name": "docuforge",
+  "version": "1.0.6",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.js",
+  "bin": {
+    "docuforge": "./dist/index.js"
+  },
+  "scripts": {
+    "start": "node --no-warnings=ExperimentalWarning --loader ts-node/esm src/index.ts",
+    "build": "tsup",
+    "pub": "npm run build && npm version patch && npm publish",
+    "refresh": "rm -rf ./node_modules ./package-lock.json && npm install",
+    "format": "npx @biomejs/biome format --write"
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "^0.0.45",
+    "@clack/prompts": "^0.7.0",
+    "ai": "^3.3.6",
+    "chalk": "^5.3.0",
+    "commander": "^12.1.0",
+    "dotenv": "^16.4.5",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
+    "@types/node": "^20.14.9",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.1.0",
+    "typescript": "^5.5.3"
+  }
 }

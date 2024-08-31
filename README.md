@@ -1,98 +1,103 @@
-# Codocx
+# Docuforge
 
-Codocx é uma ferramenta de linha de comando (CLI) simples e eficiente para automatizar a geração de documentação de qualquer projeto de software, independentemente da linguagem de programação ou stack tecnológica utilizada.
+Docuforge is a simple and efficient command-line tool (CLI) for automating documentation generation for any software project, regardless of the programming language or technology stack used.
 
-## Visão Geral
 
-A documentação é essencial, mas muitas vezes negligenciada. Codocx resolve esse problema ao permitir que desenvolvedores gerem documentação atualizada e acessível com apenas alguns comandos. A ferramenta é compatível com qualquer linguagem de programação, garantindo flexibilidade e eficiência em qualquer ambiente de desenvolvimento.
+## Project Origin
 
-## Execução via CLI
+This project is a fork of [codocx](https://github.com/jefferson-calmon/codocx), an original documentation generation tool. Docuforge was developed based on this project, expanding its functionalities and adapting it to meet specific needs.
 
-A CLI do Codocx foi projetada para ser extremamente fácil de usar, permitindo a geração de documentação diretamente a partir da estrutura de código do seu projeto.
+## Overview
 
-### Como Usar a CLI
+Documentation is essential, but often neglected. Docuforge solves this problem by allowing developers to generate up-to-date and accessible documentation with just a few commands. The tool is compatible with any programming language, ensuring flexibility and efficiency in any development environment.
 
-1. **Instale a CLI globalmente:**
+## Running via CLI
 
-    ```bash
-    npm install -g codocx
-    ```
+The Docuforge CLI is designed to be extremely easy to use, allowing documentation generation directly from your project's code structure.
 
-2. **Gere a documentação:**
+### How to Use the CLI
 
-    Navegue até o diretório do seu projeto e execute:
+1. **Install the CLI globally:**
 
     ```bash
-    codocx -p <DIR_PROJECT>
+    npm install -g docuforge
+    ```
+    or
+    ```bash
+    yarn global add docuforge
     ```
 
-    Você pode substituir `<DIR_PROJECT>` pelo caminho do diretório do projeto. Se não fornecer nenhum caminho, a CLI usará o diretório atual.
+2. **Generate the documentation:**
 
-### Ignorando Arquivos
-
-Caso queira excluir determinados arquivos ou diretórios da geração da documentação, você pode configurar isso editando o arquivo `src/constants/index.ts`.
-
-## Requisitos
-
-Antes de começar, certifique-se de que sua máquina atenda aos seguintes requisitos:
-
--   Node.js (versão 14 ou superior)
--   npm (gerenciador de pacotes do Node.js)
-
-## Como Rodar o Projeto Manualmente
-
-Se preferir rodar o Codocx localmente, siga estas etapas:
-
-1. **Clone o repositório:**
+    Navigate to your project directory and run:
 
     ```bash
-    git clone <URL_DO_REPOSITORIO>
-    cd codocx
+    docuforge -p <DIR_PROJECT>
     ```
 
-2. **Instale as dependências:**
+    You can replace `<DIR_PROJECT>` with the path to your project directory. If you don't provide a path, the CLI will use the current directory.
+
+### Ignoring Files
+
+If you want to exclude certain files or directories from documentation generation, you can configure this by editing the `src/constants/index.ts` file.
+
+## Requirements
+
+Before you begin, make sure your machine meets the following requirements:
+
+-   Node.js (version 14 or higher)
+-   npm (Node.js package manager)
+
+## How to Run the Project Manually
+
+If you prefer to run Docuforge locally, follow these steps:
+
+1. **Clone the repository:**
+
+    ```bash
+    git clone <REPOSITORY_URL>
+    cd docuforge
+    ```
+
+2. **Install dependencies:**
 
     ```bash
     npm install
     ```
 
-3. **Inicie o projeto:**
+3. **Start the project:**
 
     ```bash
     npm start
     ```
 
-## Contribuindo
+## Contributing
 
-Contribuições são bem-vindas! Se você deseja contribuir com o Codocx, siga estas etapas:
+Contributions are welcome! If you wish to contribute to Docuforge, follow these steps:
 
-1. **Fork o repositório.**
-2. **Crie uma branch para sua feature ou correção de bug:**
-
-    ```bash
-    git checkout -b minha-nova-feature
-    ```
-
-3. **Faça suas alterações e commit:**
+1. **Fork the repository.**
+2. **Create a branch for your feature or bug fix:**
 
     ```bash
-    git commit -m "Adiciona nova feature"
+    git checkout -b my-new-feature
     ```
 
-4. **Envie para o repositório remoto:**
+3. **Make your changes and commit:**
 
     ```bash
-    git push origin minha-nova-feature
+    git commit -m "Add new feature"
     ```
 
-5. **Abra um Pull Request.**
+4. **Push to the remote repository:**
 
-Por favor, certifique-se de que suas contribuições estão de acordo com o código de conduta do projeto.
+    ```bash
+    git push origin my-new-feature
+    ```
 
-## Licença
+5. **Open a Pull Request.**
 
-Este projeto está licenciado sob a Licença MIT. Consulte o arquivo [LICENSE](./LICENSE) para mais informações.
+Please ensure that your contributions comply with the project's code of conduct.
 
-## Notas Finais
+## License
 
-Todos os commits deste repositório foram gerados utilizando o [GiteAI](https://giteai.dev), uma ferramenta que automatiza a criação de mensagens de commit, garantindo consistência e clareza no histórico do projeto.
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for more information.

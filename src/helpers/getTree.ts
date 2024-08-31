@@ -1,68 +1,73 @@
-import path from "path";
-import chalk from "chalk";
+import { readdir, stat } from "node:fs/promises";
+import path from "node:path";
 import { log, spinner } from "@clack/prompts";
-import { readdir, stat } from "fs/promises";
+import chalk from "chalk";
 
-import { TreeItem } from "../types/index.ts";
-import { shouldIgnore } from "./shouldIgnore.ts";
+import type { TreeItem } from "../types/index.ts";
+import { hasAnyFileChanged } from "./documentationMetadata.ts";
 import { flattenTree } from "./flattenTree.ts";
+import { shouldIgnore } from "./shouldIgnore.ts";
 
 export async function getTree(dirPath: string) {
-    const loading = spinner();
+  const loading = spinner();
 
-    loading.start(
-        `Analisando a árvore de arquivos e diretórios de ${chalk.cyan(dirPath)}`
-    );
+  loading.start(
+    `Analyzing the file and directory tree of ${chalk.cyan(dirPath)}`
+  );
 
-    const { tree, ignored } = await getTreeFromDirPath(dirPath);
+  const { tree, ignored } = await getTreeFromDirPath(dirPath);
 
-    const flattedTree = flattenTree(tree);
+  const flattedTree = flattenTree(tree);
 
-    loading.stop(`Analise concluída de ${chalk.cyan(dirPath)}`);
+  if (!hasAnyFileChanged(flattedTree)) {
+    loading.stop("No files were changed, no need to generate documentation");
 
-    log.message(
-        `${chalk.cyan(
-            flattedTree.length
-        )} arquivos/diretórios encontrados\n${chalk.red(
-            ignored.length
-        )} arquivos/diretórios ignorados\n${chalk.green(
-            flattedTree.length - ignored.length
-        )} documentos que vão ser gerados`
-    );
+    process.exit(0);
+  }
 
-    return { items: tree, flattedTree };
+  loading.stop(`Analysis completed for ${chalk.cyan(dirPath)}`);
+
+  log.message(
+    `${chalk.cyan(flattedTree.length)} files/directories found\n${chalk.red(
+      ignored.length
+    )} files/directories ignored\n${chalk.green(
+      flattedTree.length - ignored.length
+    )} documents to be generated`
+  );
+
+  return { items: tree, flattedTree };
 }
 
 async function getTreeFromDirPath(dirPath: string, currentPath = "") {
-    let tree: TreeItem[] = [];
-    let ignored = [];
+  const tree: TreeItem[] = [];
+  const ignored = [];
 
-    const list = await readdir(dirPath);
+  const list = await readdir(dirPath);
 
-    const promises = list.map(async (file) => {
-        const filePath = path.join(dirPath, file);
-        const relativePath = path.join(currentPath, file);
-        const stats = await stat(filePath);
+  const promises = list.map(async file => {
+    const filePath = path.join(dirPath, file);
+    const relativePath = path.join(currentPath, file);
+    const stats = await stat(filePath);
 
-        const isIgnored = shouldIgnore(relativePath);
-        const isDirectory = stats.isDirectory();
+    const isIgnored = shouldIgnore(relativePath);
+    const isDirectory = stats.isDirectory();
 
-        if (isIgnored) return ignored.push(relativePath);
+    if (isIgnored) return ignored.push(relativePath);
 
-        const item: TreeItem = {
-            type: isDirectory ? "directory" : "file",
-            name: file,
-            path: relativePath,
-            fullPath: isDirectory ? path.resolve(filePath) : relativePath,
-            children: isDirectory
-                ? (await getTreeFromDirPath(filePath, relativePath)).tree
-                : undefined,
-        };
+    const item: TreeItem = {
+      type: isDirectory ? "directory" : "file",
+      name: file,
+      path: relativePath,
+      fullPath: isDirectory ? path.resolve(filePath) : relativePath,
+      children: isDirectory
+        ? (await getTreeFromDirPath(filePath, relativePath)).tree
+        : undefined
+    };
 
-        tree.push(item);
-    });
+    tree.push(item);
+  });
 
-    await Promise.all(promises);
+  await Promise.all(promises);
 
-    return { tree, ignored };
+  return { tree, ignored };
 }

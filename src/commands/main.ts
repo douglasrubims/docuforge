@@ -1,25 +1,23 @@
-import path from "path";
-import { Command } from "commander";
+import path from "node:path";
+import type { Command } from "commander";
 
 import { getTree } from "../helpers/getTree.ts";
-import { generateIntroduction } from "./actions/generateIntroduction.ts";
-import { generateDocs } from "./actions/generateDocs.ts";
 import { configApiKeyEnv } from "../helpers/validateApiKeyEnv.ts";
+import { generateDocs } from "./actions/generateDocs.ts";
+import { generateIntroduction } from "./actions/generateIntroduction.ts";
 
 interface CommandOptions {
-    Path: string;
+  Path: string;
 }
 
 export async function main(options: CommandOptions, command: Command) {
-    await configApiKeyEnv();
+  await configApiKeyEnv();
 
-    const targetPath = options.Path || path.resolve();
+  const targetPath = options.Path || path.resolve();
 
-    const { flattedTree } = await getTree(targetPath);
+  const { flattedTree } = await getTree(targetPath);
 
-    await generateIntroduction(flattedTree);
-    await generateDocs(flattedTree);
-    // await generateMintJson(flattedTree);
+  await generateIntroduction(flattedTree);
 
-    // await writeFile("./test-output.json", JSON.stringify(flattedTree, null, 4));
+  await generateDocs(flattedTree);
 }

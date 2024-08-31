@@ -3,15 +3,19 @@
 import { Command } from "commander";
 
 import pkg from "../package.json" assert { type: "json" };
-import { withErrorCatcher } from "./middlewares/errorCatcher.ts";
 import { main } from "./commands/main.ts";
+import { withErrorCatcher } from "./middlewares/errorCatcher.ts";
 
 const program = new Command();
 
 program
-    .version(pkg.version, "-v, --version", "Exibir a versão atual da CLI")
-    .name("codocx")
-    .option("-p, ---path <path>")
-    .action(withErrorCatcher(main));
+  .version(
+    pkg.version,
+    "-v, --version",
+    "Display the current version of the CLI"
+  )
+  .name("docuforge")
+  .option("-p, ---path <path>")
+  .action(withErrorCatcher(main));
 
 program.parse(process.argv);
