@@ -3,6 +3,7 @@
   "version": "1.0.6",
   "license": "MIT",
   "type": "module",
+  "repository": "https://github.com/douglasrubims/docuforge.git",
   "main": "./dist/index.js",
   "bin": {
     "docuforge": "./dist/index.js"
