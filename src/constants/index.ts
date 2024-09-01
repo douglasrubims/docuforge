@@ -20,6 +20,7 @@ export const IGNORE = [
   ".next",
   "tmp",
   "logs",
+  ".husky",
 
   ".env",
   ".env.local",
