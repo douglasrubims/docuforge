@@ -15,7 +15,7 @@ Docuforge is a simple and efficient command-line tool (CLI) for automating docum
 
 This project is a fork of [codocx](https://github.com/jefferson-calmon/codocx), an original documentation generation tool. Docuforge was developed based on this project, expanding its functionalities and adapting it to meet specific needs.
 
-## Setting Up Husky
+## Setting Up Husky (Optional)
 
 To automatically update documentation with each commit, you can set up Husky by following these steps:
 
@@ -23,6 +23,12 @@ To automatically update documentation with each commit, you can set up Husky by 
 
     ```bash
     yarn add -D husky
+    ```
+
+    Or using npm:
+
+    ```bash
+    npm install --save-dev husky
     ```
 
 2. Initialize Husky:
