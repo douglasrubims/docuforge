@@ -2,10 +2,59 @@
 
 Docuforge is a simple and efficient command-line tool (CLI) for automating documentation generation for any software project, regardless of the programming language or technology stack used.
 
+## Features
+
+- **Automatic Documentation Generation**: Docuforge allows developers to generate up-to-date and accessible documentation directly from the project's code structure.
+- **Language Agnostic**: The tool is compatible with any programming language, ensuring flexibility and efficiency in any development environment.
+- **File/Directory Exclusion**: Ability to configure the exclusion of certain files or directories from documentation generation.
+- **CLI Execution**: Easy-to-use command-line interface for generating documentation with just a few commands.
+- **OpenAI Integration**: Utilizes the OpenAI API to generate detailed and accurate descriptions of the project's files and directories.
+- **Intelligent Regeneration**: Docuforge only regenerates documentation when changes are detected in the code, and it specifically targets only the modified files, saving time and resources.
 
 ## Project Origin
 
 This project is a fork of [codocx](https://github.com/jefferson-calmon/codocx), an original documentation generation tool. Docuforge was developed based on this project, expanding its functionalities and adapting it to meet specific needs.
+
+## Setting Up Husky
+
+To automatically update documentation with each commit, you can set up Husky by following these steps:
+
+1. Install Husky as a development dependency:
+
+    ```bash
+    yarn add -D husky
+    ```
+
+2. Initialize Husky:
+
+    ```bash
+    npx husky-init
+    ```
+
+3. Create a script in your `package.json` called `gen-docs`:
+
+    ```json
+    {
+      "scripts": {
+        "gen-docs": "docuforge"
+      }
+    }
+    ```
+
+4. Edit the `.husky/pre-commit` file to include the following:
+
+    ```sh
+    #!/usr/bin/env sh
+    . "$(dirname -- "$0")/_/husky.sh"
+
+    yarn gen-docs
+
+    if [ -n "$(git status docs --porcelain)" ]; then
+      git add docs
+    fi
+    ```
+
+This setup will ensure that documentation is generated and updated automatically every time you make a commit.
 
 ## Overview
 
