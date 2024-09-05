@@ -10,6 +10,7 @@ Docuforge is a simple and efficient command-line tool (CLI) for automating docum
 - **CLI Execution**: Easy-to-use command-line interface for generating documentation with just a few commands.
 - **OpenAI Integration**: Utilizes the OpenAI API to generate detailed and accurate descriptions of the project's files and directories.
 - **Intelligent Regeneration**: Docuforge only regenerates documentation when changes are detected in the code, and it specifically targets only the modified files, saving time and resources.
+- **Automatic Deletion of Documentation**: Docuforge automatically deletes documentation for files that have been removed from the project, keeping the documentation structure always updated according to the original project.
 
 ## Project Origin
 

@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { TreeItemFlatted } from "../types/index.ts";
+import { getDocPath } from "./getDocPath.ts";
 
 interface DocumentationMetadata {
   [filePath: string]: {
@@ -36,6 +37,23 @@ export function updateMetadata(item: TreeItemFlatted): void {
     lastDocumented: Date.now(),
     lastModified: fs.statSync(item.fullPath).mtimeMs
   };
+
+  saveMetadata(metadata);
+}
+
+export function checkForDeletedFiles(tree: TreeItemFlatted[]): void {
+  for (const item of tree)
+    if (!fs.existsSync(item.fullPath)) deleteDocumentation(item);
+}
+
+export function deleteDocumentation(item: TreeItemFlatted): void {
+  const metadata = loadMetadata();
+
+  const docPath = getDocPath(item.fullPath).path;
+
+  if (fs.existsSync(docPath)) fs.unlinkSync(docPath);
+
+  delete metadata[item.path];
 
   saveMetadata(metadata);
 }

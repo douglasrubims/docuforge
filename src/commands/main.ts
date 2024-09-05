@@ -1,6 +1,7 @@
 import path from "node:path";
 import type { Command } from "commander";
 
+import { checkForDeletedFiles } from "../helpers/documentationMetadata.ts";
 import { getTree } from "../helpers/getTree.ts";
 import { configApiKeyEnv } from "../helpers/validateApiKeyEnv.ts";
 import { generateDocs } from "./actions/generateDocs.ts";
@@ -16,6 +17,8 @@ export async function main(options: CommandOptions, command: Command) {
   const targetPath = options.Path || path.resolve();
 
   const { flattedTree } = await getTree(targetPath);
+
+  checkForDeletedFiles(flattedTree);
 
   await generateIntroduction(flattedTree);
 
