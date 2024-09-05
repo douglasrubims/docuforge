@@ -94,7 +94,7 @@ The Docuforge CLI is designed to be extremely easy to use, allowing documentatio
 
 ### Ignoring Files
 
-If you want to exclude certain files or directories from documentation generation, you can configure this by editing the `src/constants/index.ts` file.
+To exclude certain files or directories from documentation generation, simply create a `.dcfignore` file and list the files and folders you want to ignore inside it. The tool will automatically ignore them. Additionally, there is a default list of ignored paths located in the `src/constants/index.ts` file.
 
 ## Requirements
 
