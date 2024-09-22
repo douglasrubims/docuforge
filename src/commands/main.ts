@@ -17,9 +17,9 @@ export async function main(options: CommandOptions, command: Command) {
 
   const targetPath = options.Path || path.resolve();
 
-  const { flattedTree } = await getTree(targetPath);
+  checkForDeletedFiles();
 
-  checkForDeletedFiles(flattedTree);
+  const { flattedTree } = await getTree(targetPath);
 
   await generateIntroduction(flattedTree);
 
