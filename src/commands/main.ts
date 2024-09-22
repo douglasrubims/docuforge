@@ -9,10 +9,11 @@ import { generateIntroduction } from "./actions/generateIntroduction.ts";
 
 interface CommandOptions {
   Path: string;
+  nonInteractive: boolean;
 }
 
 export async function main(options: CommandOptions, command: Command) {
-  await configApiKeyEnv();
+  await configApiKeyEnv(options.nonInteractive);
 
   const targetPath = options.Path || path.resolve();
 
