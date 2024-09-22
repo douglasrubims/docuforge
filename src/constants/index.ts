@@ -111,7 +111,9 @@ export const IGNORE = [
   "*.zip",
   "*.tar",
   "*.gz",
-  "*.rar"
+  "*.rar",
+
+  ".dfcignore"
 ];
 
 export const SYSTEM_PROMPT =
