@@ -53,19 +53,21 @@ export function updateMetadata(item: TreeItemFlatted): void {
   saveMetadata(metadata);
 }
 
-export function checkForDeletedFiles(tree: TreeItemFlatted[]): void {
-  for (const item of tree)
-    if (!fs.existsSync(item.fullPath)) deleteDocumentation(item);
-}
-
-export function deleteDocumentation(item: TreeItemFlatted): void {
+export function checkForDeletedFiles(): void {
   const metadata = loadMetadata();
 
-  const docPath = getDocPath(item.fullPath).path;
+  for (const filePath of Object.keys(metadata))
+    if (!fs.existsSync(filePath)) deleteDocumentation(filePath);
+}
+
+export function deleteDocumentation(filePath: string): void {
+  const metadata = loadMetadata();
+
+  const docPath = getDocPath(filePath).path;
 
   if (fs.existsSync(docPath)) fs.unlinkSync(docPath);
 
-  delete metadata[item.path];
+  delete metadata[filePath];
 
   saveMetadata(metadata);
 }

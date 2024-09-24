@@ -10,17 +10,18 @@ import { generateIntroduction } from "./actions/generateIntroduction.ts";
 interface CommandOptions {
   Path: string;
   ChunkSize: number;
+  nonInteractive: boolean;
 }
 
 export async function main(options: CommandOptions, command: Command) {
-  await configApiKeyEnv();
+  await configApiKeyEnv(options.nonInteractive);
 
   const targetPath = options.Path || path.resolve();
   const chunkSize = options.ChunkSize || 25;
 
-  const { flattedTree } = await getTree(targetPath);
+  checkForDeletedFiles();
 
-  checkForDeletedFiles(flattedTree);
+  const { flattedTree } = await getTree(targetPath);
 
   await generateIntroduction(flattedTree);
 

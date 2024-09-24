@@ -16,6 +16,7 @@ program
   )
   .name("docuforge")
   .option("-p, ---path <path>")
+  .option("-n, --non-interactive", "Run the command in non-interactive mode")
   .option("-c, ---chunkSize <chunkSize>")
   .action(withErrorCatcher(main));
 
