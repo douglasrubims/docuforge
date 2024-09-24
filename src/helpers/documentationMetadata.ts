@@ -1,12 +1,14 @@
 import fs from "node:fs";
 import path from "node:path";
+import crypto from "node:crypto";
 import type { TreeItemFlatted } from "../types/index.ts";
 import { getDocPath } from "./getDocPath.ts";
+import { exit } from "node:process";
 
 interface DocumentationMetadata {
   [filePath: string]: {
     lastDocumented: number;
-    lastModified: number;
+    hash: string;
   };
 }
 
@@ -33,9 +35,19 @@ export function saveMetadata(metadata: DocumentationMetadata): void {
 export function updateMetadata(item: TreeItemFlatted): void {
   const metadata = loadMetadata();
 
+  let content = "";
+
+  if (item.type === "file") {
+    content = fs.readFileSync(item.fullPath, "utf-8");
+  } else {
+    const files = fs.readdirSync(item.fullPath);
+    content = files.join(",");
+  }
+
+  const hash = crypto.createHash("sha256").update(content).digest("hex");
   metadata[item.path] = {
     lastDocumented: Date.now(),
-    lastModified: fs.statSync(item.fullPath).mtimeMs
+    hash
   };
 
   saveMetadata(metadata);
@@ -64,10 +76,18 @@ export function needsDocumentation(item: TreeItemFlatted): boolean {
   const fileInfo = metadata[item.path];
 
   if (!fileInfo) return true;
+  let content = "";
 
-  const currentModifiedTime = fs.statSync(item.fullPath).mtimeMs;
+  if (item.type === "file") {
+    content = fs.readFileSync(item.fullPath, "utf-8");
+  } else {
+    const files = fs.readdirSync(item.fullPath);
+    content = files.join(",");
+  }
 
-  return currentModifiedTime > fileInfo.lastModified;
+  const currentHash = crypto.createHash("sha256").update(content).digest("hex");
+
+  return currentHash !== fileInfo.hash;
 }
 
 export function hasAnyFileChanged(tree: TreeItemFlatted[]): boolean {
@@ -80,9 +100,14 @@ export function hasAnyFileChanged(tree: TreeItemFlatted[]): boolean {
 
     if (!fileInfo) return true;
 
-    const currentModifiedTime = fs.statSync(item.fullPath).mtimeMs;
+    const content = fs.readFileSync(item.fullPath, "utf-8");
 
-    if (currentModifiedTime > fileInfo.lastModified) return true;
+    const currentHash = crypto
+      .createHash("sha256")
+      .update(content)
+      .digest("hex");
+
+    if (currentHash !== fileInfo.hash) return true;
   }
 
   return false;

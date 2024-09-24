@@ -20,6 +20,7 @@ export async function getPromptResult(prompt: string) {
   const result = await generateText({
     model: openai("gpt-4o-mini"),
     system: SYSTEM_PROMPT,
+    maxRetries: 5,
     prompt
   });
 

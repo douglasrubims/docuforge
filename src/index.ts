@@ -16,6 +16,7 @@ program
   )
   .name("docuforge")
   .option("-p, ---path <path>")
+  .option("-c, ---chunkSize <chunkSize>")
   .action(withErrorCatcher(main));
 
 program.parse(process.argv);

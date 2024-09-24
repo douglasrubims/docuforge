@@ -9,12 +9,14 @@ import { generateIntroduction } from "./actions/generateIntroduction.ts";
 
 interface CommandOptions {
   Path: string;
+  ChunkSize: number;
 }
 
 export async function main(options: CommandOptions, command: Command) {
   await configApiKeyEnv();
 
   const targetPath = options.Path || path.resolve();
+  const chunkSize = options.ChunkSize || 25;
 
   const { flattedTree } = await getTree(targetPath);
 
@@ -22,5 +24,5 @@ export async function main(options: CommandOptions, command: Command) {
 
   await generateIntroduction(flattedTree);
 
-  await generateDocs(flattedTree);
+  await generateDocs(flattedTree, chunkSize);
 }
