@@ -3,11 +3,9 @@ import path from "node:path";
 import crypto from "node:crypto";
 import type { TreeItemFlatted } from "../types/index.ts";
 import { getDocPath } from "./getDocPath.ts";
-import { exit } from "node:process";
 
 interface DocumentationMetadata {
   [filePath: string]: {
-    lastDocumented: number;
     hash: string;
   };
 }
@@ -46,7 +44,6 @@ export function updateMetadata(item: TreeItemFlatted): void {
 
   const hash = crypto.createHash("sha256").update(content).digest("hex");
   metadata[item.path] = {
-    lastDocumented: Date.now(),
     hash
   };
 
