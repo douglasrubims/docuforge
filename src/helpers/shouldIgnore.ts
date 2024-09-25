@@ -1,23 +1,14 @@
 import fs from "node:fs";
 
 import { IGNORE } from "../constants/index.ts";
+import ignore from "ignore";
 
 export function shouldIgnore(path: string): boolean {
   const dcfIgnorePatterns = loadDcfIgnore();
   const allIgnorePatterns = [...IGNORE, ...dcfIgnorePatterns];
+  const ig = ignore().add(allIgnorePatterns);
 
-  return allIgnorePatterns.some(pattern => {
-    if (pattern.endsWith("/")) pattern += "*";
-
-    const regexPattern = pattern
-      .replace(/\./g, "\\.")
-      .replace(/\*/g, ".*")
-      .replace(/\/$/, "/.*");
-
-    const regex = new RegExp(`^${regexPattern}`);
-
-    return regex.test(path);
-  });
+  return ig.ignores(path);
 }
 
 function loadDcfIgnore(): string[] {
