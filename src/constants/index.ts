@@ -113,7 +113,8 @@ export const IGNORE = [
   "*.gz",
   "*.rar",
 
-  ".dfcignore"
+  ".dfcignore",
+  "venv",
 ];
 
 export const SYSTEM_PROMPT =

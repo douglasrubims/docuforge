@@ -1,11 +1,23 @@
-import { openai } from "@ai-sdk/openai";
+import { createOllama } from 'ollama-ai-provider';
 import { generateText } from "ai";
 import { SYSTEM_PROMPT } from "../constants/index.ts";
+import { ollamaHelper } from './ollamaHelper.ts';
+import { openai } from '@ai-sdk/openai';
+
+const modelProxy = () => {
+  if (ollamaHelper.get()) {
+    return createOllama({
+      baseURL: process.env.OLLAMA_BASE_API_URL
+    })(process.env.AI_MODEL)
+  }
+
+  return openai(process.env.AI_MODEL)
+}
 
 export function createPromptAbility(system: string) {
   async function getResult(prompt: string) {
     const result = await generateText({
-      model: openai("gpt-4o-mini"),
+      model: modelProxy(),
       system,
       prompt
     });
@@ -18,7 +30,7 @@ export function createPromptAbility(system: string) {
 
 export async function getPromptResult(prompt: string) {
   const result = await generateText({
-    model: openai("gpt-4o-mini"),
+    model: modelProxy(),
     system: SYSTEM_PROMPT,
     maxRetries: 5,
     prompt
