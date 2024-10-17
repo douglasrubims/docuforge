@@ -7,13 +7,11 @@ import {
 } from "../constants/errors.ts";
 import { apiKey } from "../utils/apiKey.ts";
 import { cancel } from "../utils/prompt.ts";
-import { ollamaHelper } from "../utils/ollamaHelper.ts";
 
 export async function configApiKeyEnv(nonInteractive?: boolean) {
   const openAiApiKey = await apiKey.get();
-  const isUsingOllama = ollamaHelper.get();
 
-  if (!openAiApiKey && !isUsingOllama) {
+  if (!openAiApiKey) {
     if (nonInteractive) throw new Error(OPENAI_API_KEY_ENV_NOT_FOUND);
 
     log.warn(OPENAI_API_KEY_REQUIRED);
