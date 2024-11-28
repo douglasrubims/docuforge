@@ -114,7 +114,7 @@ export const IGNORE = [
   "*.rar",
 
   ".dfcignore",
-  "venv",
+  "venv"
 ];
 
 export const SYSTEM_PROMPT =

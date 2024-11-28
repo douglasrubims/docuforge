@@ -7,7 +7,7 @@ import { getPromptResult } from "../utils/ai.ts";
 
 type Item = TreeItemFlatted;
 
-const generateDocThroughContext = (context: string[]) => async function (item: Item) {
+const generateDocThroughContext = (context: string[]) => async (item: Item) => {
   let content = "";
 
   if (item.type === "file")
@@ -25,7 +25,7 @@ const generateDocThroughContext = (context: string[]) => async function (item: I
   const { text } = await getPromptResult(prompt);
 
   return text;
-}
+};
 
 export function cachedGenerateDoc(tree: Item[]) {
   const context = tree.map(item => item.path);
@@ -35,33 +35,37 @@ export function cachedGenerateDoc(tree: Item[]) {
 
 const getSmartContext = async (basePath: string): Promise<string[]> => {
   try {
-    const regex = /import.+['"](.+)['"];?/g
+    const regex = /import.+['"](.+)['"];?/g;
 
-    const pathInfo = path.parse(basePath)
+    const pathInfo = path.parse(basePath);
 
-    const lstatResults = await fs.promises.lstat(basePath)
+    const lstatResults = await fs.promises.lstat(basePath);
 
-    if (lstatResults.isDirectory()) return Promise.all(
-      ['index.js', 'index.ts'].map(file => getSmartContext(path.resolve(basePath, file)))
-    ).then(result => result.flat())
+    if (lstatResults.isDirectory())
+      return Promise.all(
+        ["index.js", "index.ts"].map(file =>
+          getSmartContext(path.resolve(basePath, file))
+        )
+      ).then(result => result.flat());
 
     const content = await fs.promises.readFile(basePath, "utf-8");
 
-    const iterator = content.matchAll(regex)
+    const iterator = content.matchAll(regex);
 
-    const data = Array.from(iterator)
+    const data = Array.from(iterator);
 
-    const paths = data.map(item => item[1])
-      .filter(recursivePath => recursivePath.startsWith('.'))
+    const paths = data
+      .map(item => item[1])
+      .filter(recursivePath => recursivePath.startsWith("."))
       .map(recursivePath => path.join(pathInfo.dir, recursivePath));
 
     const recursivePaths = await Promise.all(paths.map(getSmartContext));
 
-    return [...paths, ...recursivePaths.flat()]
+    return [...paths, ...recursivePaths.flat()];
   } catch (e: unknown) {
-    return []
+    return [];
   }
-}
+};
 
 export async function smartDocGeneration(item: Item) {
   const context = await getSmartContext(item.fullPath);

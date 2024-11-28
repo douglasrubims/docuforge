@@ -9,6 +9,7 @@ Docuforge is a simple and efficient command-line tool (CLI) for automating docum
 - **File/Directory Exclusion**: Ability to configure the exclusion of certain files or directories from documentation generation.
 - **CLI Execution**: Easy-to-use command-line interface for generating documentation with just a few commands.
 - **OpenAI Integration**: Utilizes the OpenAI API to generate detailed and accurate descriptions of the project's files and directories.
+- **Ollama Integration**: Supports integration with the Ollama API for generating documentation, providing an alternative to OpenAI.
 - **Intelligent Regeneration**: Docuforge only regenerates documentation when changes are detected in the code, and it specifically targets only the modified files, saving time and resources.
 - **Automatic Deletion of Documentation**: Docuforge automatically deletes documentation for files that have been removed from the project, keeping the documentation structure always updated according to the original project.
 
@@ -96,6 +97,15 @@ The Docuforge CLI is designed to be extremely easy to use, allowing documentatio
 ### Ignoring Files
 
 To exclude certain files or directories from documentation generation, simply create a `.dcfignore` file and list the files and folders you want to ignore inside it. The tool will automatically ignore them. Additionally, there is a default list of ignored paths located in the `src/constants/index.ts` file.
+
+### Using Ollama instead of OpenAI
+
+To use the Ollama API for documentation generation instead of OpenAI, you can specify the `--ollama-mode` option when running the CLI. Additionally, you can set the Ollama base URL and model using the `--ollama-base-url` and `--ai-model` options, respectively. Here’s an example command:
+
+```bash
+docuforge --ollama-mode --ollama-base-url http://localhost:11434/api --ai-model llama3
+```
+By default, the Ollama API is used with the `llama3` model, and the `--ollama-base-url` option is set to http://localhost:11434/api. You can change the model by setting the `--ai-model` option to the desired model, and you can also specify a different base URL if needed.
 
 ## Requirements
 

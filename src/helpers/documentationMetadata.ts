@@ -1,6 +1,7 @@
+import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
-import crypto from "node:crypto";
+
 import type { TreeItemFlatted } from "../types/index.ts";
 import { getDocPath } from "./getDocPath.ts";
 
@@ -13,13 +14,11 @@ interface DocumentationMetadata {
 const metadataFilePath = path.join(process.cwd(), "docs", "metadata.json");
 
 export function loadMetadata(): DocumentationMetadata {
-  if (fs.existsSync(metadataFilePath)) {
-    const data = fs.readFileSync(metadataFilePath, "utf-8");
+  if (!fs.existsSync(metadataFilePath)) return {};
 
-    return JSON.parse(data);
-  }
+  const data = fs.readFileSync(metadataFilePath, "utf-8");
 
-  return {};
+  return JSON.parse(data);
 }
 
 export function saveMetadata(metadata: DocumentationMetadata): void {
@@ -33,19 +32,14 @@ export function saveMetadata(metadata: DocumentationMetadata): void {
 export function updateMetadata(item: TreeItemFlatted): void {
   const metadata = loadMetadata();
 
-  let content = "";
-
-  if (item.type === "file") {
-    content = fs.readFileSync(item.fullPath, "utf-8");
-  } else {
-    const files = fs.readdirSync(item.fullPath);
-    content = files.join(",");
-  }
+  const content =
+    item.type === "file"
+      ? fs.readFileSync(item.fullPath, "utf-8")
+      : fs.readdirSync(item.fullPath).join(",");
 
   const hash = crypto.createHash("sha256").update(content).digest("hex");
-  metadata[item.path] = {
-    hash
-  };
+
+  metadata[item.path] = { hash };
 
   saveMetadata(metadata);
 }
@@ -75,14 +69,11 @@ export function needsDocumentation(item: TreeItemFlatted): boolean {
   const fileInfo = metadata[item.path];
 
   if (!fileInfo) return true;
-  let content = "";
 
-  if (item.type === "file") {
-    content = fs.readFileSync(item.fullPath, "utf-8");
-  } else {
-    const files = fs.readdirSync(item.fullPath);
-    content = files.join(",");
-  }
+  const content =
+    item.type === "file"
+      ? fs.readFileSync(item.fullPath, "utf-8")
+      : fs.readdirSync(item.fullPath).join(",");
 
   const currentHash = crypto.createHash("sha256").update(content).digest("hex");
 
